@@ -18,7 +18,7 @@ public function index(){
 
 public function store(Request $request){
     $validated = $request->validate([
-        'name' => ['required'],
+        'status' => ['required','in:offen,interview,absage,zusage'],
         'title' => ['required'],
         'city' => ['required'],
         'company' => ['required'],
@@ -47,14 +47,14 @@ public function edit($id){
 $jobInfo = Bewerbung::find($id);
 
 return view('bewerbung-edit',[
-    'jobs' => $jobInfo,
+    'job' => $jobInfo,
 ]);
 }
 
 //update
 public function update(Request $request, $id){
 $validated = $request->validate([
-    'name' => ['required'],
+    'status' => ['required','in:offen,interview,absage,zusage'],
     'title' => ['required'],
     'company' => ['required'],
     'city' => ['required'],

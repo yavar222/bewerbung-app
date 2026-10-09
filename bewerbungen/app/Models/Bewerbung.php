@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Bewerbung extends Model
 {
     protected $fillable = [
-        'name',
+        'status',
         'company',
         'title',
         'city',

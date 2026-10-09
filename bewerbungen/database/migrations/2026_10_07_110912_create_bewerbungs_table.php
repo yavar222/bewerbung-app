@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('bewerbungs', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('status')->default('offen');
             $table->string('title');
             $table->string('company');
             $table->string('city');

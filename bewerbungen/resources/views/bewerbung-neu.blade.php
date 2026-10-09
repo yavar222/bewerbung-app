@@ -1,28 +1,34 @@
-<div style="margin:2rem;">
-   <h1>Form</h1>
+<x-layout>
+    <h1 class="text-3xl font-bold mb-6">Neue Bewerbung</h1>
 
-   <form methode="POST" action="/bewerbungen"   style="display: flex; flex-direction: column; gap:1rem;">
-    @csrf
-    <div>
-        <label for="name">Name</label>
-        <input type="text" name="name" value="{{ old('name')}}"/>
+    <form method="POST" action="/bewerbungen" class="bg-white p-6 rounded-lg shadow space-y-4">
+        @csrf
 
-    </div>
-    <div>
-        <label for="title">Title</label>
-        <input type="text" name="title" value="{{ old('title')}}"/>
+        @foreach (['title' => 'Stelle', 'company' => 'Firma', 'city' => 'Stadt'] as $feld => $label)
+            <div>
+                <label for="{{ $feld }}" class="block font-semibold mb-1">{{ $label }}</label>
+                <input id="{{ $feld }}" name="{{ $feld }}" value="{{ old($feld) }}"
+                       class="w-full border border-gray-300 rounded px-3 py-2">
+                @error($feld)
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+        @endforeach
 
-    </div>
-    <div>
-        <label for="company">Company</label>
-        <input type="text" name="company" value="{{ old('company')}}"/>
-    </div>
-    <div>
-        <label for="city">City</label>
-        <input type="text" name="city" value="{{ old('city')}}"/>
-    </div>
-<div>    <button type=submit>send</button></div>
+        <div>
+            <label for="status" class="block font-semibold mb-1">Status</label>
+            <select id="status" name="status" class="w-full border border-gray-300 rounded px-3 py-2">
+                @foreach (['offen' => 'Offen', 'interview' => 'Interview', 'absage' => 'Absage', 'zusage' => 'Zusage'] as $wert => $text)
+                    <option value="{{ $wert }}" @selected(old('status') === $wert)>{{ $text }}</option>
+                @endforeach
+            </select>
+        </div>
 
+        <button type="submit" class="px-4 py-2 rounded bg-green-600 text-white">Speichern</button>
+        <a href="/bewerbungen" class="ml-2 text-gray-600">Abbrechen</a>
+    </form>
 
-   </form>
-</div>
+    <a href="/bewerbungen"
+           class="inline-block mb-6 px-4 py-2 mt-6 rounded bg-blue-600 text-white">Alle Bewerbungen</a>
+    </a>
+</x-layout>
